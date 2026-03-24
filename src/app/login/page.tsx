@@ -35,6 +35,7 @@ export default function LoginPage() {
       const res = await signIn("email", {
         redirect: false,
         email,
+        callbackUrl: "/dashboard",
       });
 
       if (res?.error) {
