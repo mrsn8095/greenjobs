@@ -36,10 +36,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/register"
+                  href="/login"
                   className="hover:text-green-400 transition"
                 >
-                  Register as Candidate
+                  Login / Register as Candidate
                 </Link>
               </li>
               <li>

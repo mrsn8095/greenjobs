@@ -65,10 +65,10 @@ export default function HeroSection() {
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              href="/register"
+              href="/login"
               className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-gray-700 bg-white border border-gray-200 rounded-full shadow-sm hover:border-green-500 hover:text-green-600 transition flex items-center justify-center"
             >
-              Register Now
+              Login / Register
             </Link>
           </motion.div>
 
