@@ -13,6 +13,8 @@ export const metadata: Metadata = {
     "Get Placed in Gulf & India Jobs Faster. Over 5000+ candidates placed.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
