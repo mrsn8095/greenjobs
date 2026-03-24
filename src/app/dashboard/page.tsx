@@ -26,6 +26,7 @@ export default async function CandidateDashboard({
 
   const uploadResume = async (formData: FormData) => {
     "use server";
+    let success = false;
     try {
       const file = formData.get("resume") as File;
       if (!file || file.size === 0) {
@@ -41,9 +42,14 @@ export default async function CandidateDashboard({
         where: { id: session?.user?.id },
         data: { resumeUrl: blob.url },
       });
-      redirect("/dashboard?resume_success=true");
+      success = true;
     } catch (e) {
       console.error("Resume Upload Error:", e);
+    }
+    
+    if (success) {
+      redirect("/dashboard?resume_success=true");
+    } else {
       redirect("/dashboard?resume_error=true");
     }
   };
