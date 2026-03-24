@@ -5,6 +5,7 @@ import { Briefcase, Clock, CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { put } from "@vercel/blob";
 
 export default async function CandidateDashboard({
   searchParams,
@@ -25,13 +26,26 @@ export default async function CandidateDashboard({
 
   const uploadResume = async (formData: FormData) => {
     "use server";
-    // Simulated upload for demonstration purposes. In production, use AWS S3, Vercel Blob or similar.
-    const url = "https://example.com/mock-resume-url.pdf";
-    await prisma.user.update({
-      where: { id: session?.user?.id },
-      data: { resumeUrl: url },
-    });
-    revalidatePath("/dashboard");
+    try {
+      const file = formData.get("resume") as File;
+      if (!file || file.size === 0) {
+        throw new Error("No file selected.");
+      }
+
+      // Automatically uploads directly uniquely isolated to the user payload
+      const blob = await put(`resumes/${session?.user?.id}-${file.name}`, file, {
+        access: "public",
+      });
+
+      await prisma.user.update({
+        where: { id: session?.user?.id },
+        data: { resumeUrl: blob.url },
+      });
+      redirect("/dashboard?resume_success=true");
+    } catch (e) {
+      console.error("Resume Upload Error:", e);
+      redirect("/dashboard?resume_error=true");
+    }
   };
 
   const saveProfile = async (formData: FormData) => {
@@ -139,6 +153,18 @@ export default async function CandidateDashboard({
           <h2 className="text-xl font-bold text-gray-900 mb-6 border-b pb-2">
             Resume Upload
           </h2>
+
+          {searchParams?.resume_success && (
+            <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl mb-6 text-sm font-semibold flex items-center">
+              ✓ Resume successfully secured in cloud!
+            </div>
+          )}
+          {searchParams?.resume_error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6 text-sm font-semibold flex items-center">
+              ⚠️ Failed to upload. Make sure Vercel Blob is connected.
+            </div>
+          )}
+
           {userDetails?.resumeUrl ? (
             <div className="bg-green-50 p-4 rounded-xl border border-green-200 flex flex-col mb-4">
               <span className="font-bold text-green-800 flex items-center">
