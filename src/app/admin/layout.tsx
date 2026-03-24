@@ -52,7 +52,27 @@ export default async function AdminLayout({
         </nav>
       </aside>
 
-      <main className="flex-1 overflow-y-auto w-full">{children}</main>
+      <main className="flex-1 overflow-y-auto w-full pb-20 md:pb-0">{children}</main>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="md:hidden fixed bottom-0 w-full bg-gray-900 border-t border-gray-800 flex justify-between px-2 py-2 z-50 text-gray-400">
+         <Link href="/admin" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
+            <LayoutDashboard className="w-5 h-5 mb-1" />
+            <span className="text-[10px] font-medium">Dash</span>
+         </Link>
+         <Link href="/admin/jobs" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
+            <Briefcase className="w-5 h-5 mb-1" />
+            <span className="text-[10px] font-medium">Jobs</span>
+         </Link>
+         <Link href="/admin/applications" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
+            <FileText className="w-5 h-5 mb-1" />
+            <span className="text-[10px] font-medium">Apps</span>
+         </Link>
+         <Link href="/admin/leads" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
+            <Users className="w-5 h-5 mb-1" />
+            <span className="text-[10px] font-medium">Leads</span>
+         </Link>
+      </nav>
     </div>
   );
 }
