@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Users, Briefcase, FileText } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, FileText, UserPlus } from "lucide-react";
 
 export default async function AdminLayout({
   children,
@@ -44,6 +44,12 @@ export default async function AdminLayout({
             <FileText className="w-5 h-5 mr-3" /> Applications
           </Link>
           <Link
+            href="/admin/candidates"
+            className="flex items-center px-4 py-3 hover:bg-gray-800 hover:text-white rounded-xl transition"
+          >
+            <UserPlus className="w-5 h-5 mr-3" /> Candidates
+          </Link>
+          <Link
             href="/admin/leads"
             className="flex items-center px-4 py-3 hover:bg-gray-800 hover:text-white rounded-xl transition"
           >
@@ -67,6 +73,10 @@ export default async function AdminLayout({
          <Link href="/admin/applications" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
             <FileText className="w-5 h-5 mb-1" />
             <span className="text-[10px] font-medium">Apps</span>
+         </Link>
+         <Link href="/admin/candidates" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
+            <UserPlus className="w-5 h-5 mb-1" />
+            <span className="text-[10px] font-medium">Cands</span>
          </Link>
          <Link href="/admin/leads" className="flex flex-col items-center flex-1 py-1 hover:text-white transition">
             <Users className="w-5 h-5 mb-1" />

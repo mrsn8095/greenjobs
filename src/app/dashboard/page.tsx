@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { Briefcase, Clock, CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default async function CandidateDashboard({
   searchParams,
@@ -44,7 +45,7 @@ export default async function CandidateDashboard({
       where: { id: session?.user?.id },
       data: { name, phone, skills, experience },
     });
-    revalidatePath("/dashboard");
+    redirect("/dashboard?success=true");
   };
 
   return (
@@ -59,6 +60,12 @@ export default async function CandidateDashboard({
           {searchParams?.profile_incomplete && (
             <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6 text-sm font-semibold">
               ⚠️ Please fill out your Name and Phone Number to apply for this job!
+            </div>
+          )}
+
+          {searchParams?.success && (
+            <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl mb-6 text-sm font-semibold flex items-center">
+              ✓ Profile successfully updated!
             </div>
           )}
 
