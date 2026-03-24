@@ -44,7 +44,8 @@ async function main() {
         salary: 'QAR 4,000 / month',
         description: 'Reliable store keeper required for maintaining inventory in our Doha based warehouse.',
       }
-    ]
+    ],
+    skipDuplicates: true
   });
   console.log('Sample jobs seeded.');
 }
